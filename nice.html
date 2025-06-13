@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>本間テニスコーチ＆Webデザイン | 松戸市のスポーツ特化型Web制作</title>
+<meta name="description" content="松戸市を拠点に活動するテニスコーチ兼Webデザイナー。スポーツ業界に特化したWeb制作サービスを提供しています。">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<style>
+.loader {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: #ffffff;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 9999;
+transition: opacity 0.5s ease-out;
+}
+.loader.fade-out {
+opacity: 0;
+}
+.tennis-court-loader {
+position: relative;
+width: 200px;
+height: 120px;
+}
+.tennis-ball {
+width: 16px;
+height: 16px;
+background: #bfd600;
+border-radius: 50%;
+position: absolute;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+z-index: 2;
+}
+.tennis-ball::before {
+content: "";
+position: absolute;
+width: 14px;
+height: 14px;
+top: 1px;
+left: 1px;
+background: transparent;
+border-radius: 50%;
+border: 1px solid rgba(255, 255, 255, 0.8);
+transform: rotate(-45deg);
+}
+.tennis-ball::after {
+content: "";
+position: absolute;
+width: 14px;
+height: 14px;
+top: 1px;
+left: 1px;
+background: transparent;
+border-radius: 50%;
+border: 1px solid rgba(255, 255, 255, 0.8);
+transform: rotate(45deg);
+}
+.tennis-court {
+position: absolute;
+width: 100%;
+height: 100%;
+border: 2px solid #003C43;
+border-radius: 4px;
+background: rgba(0, 60, 67, 0.05);
+}
+.tennis-court::before {
+content: "";
+position: absolute;
+top: 50%;
+left: 0;
+width: 100%;
+height: 2px;
+background: #003C43;
+transform: translateY(-50%);
+}
+.tennis-court::after {
+content: "";
+position: absolute;
+top: 0;
+left: 50%;
+width: 2px;
+height: 100%;
+background: #003C43;
+transform: translateX(-50%);
+}
+.net {
+position: absolute;
+top: 0;
+left: 50%;
+width: 2px;
+height: 100%;
+background: repeating-linear-gradient(0deg, transparent, transparent 4px, #003C43 4px, #003C43 8px);
+transform: translateX(-50%);
+opacity: 0.5;
+}
+.service-box {
+position: absolute;
+width: 25%;
+height: 50%;
+border: 1px solid rgba(0, 60, 67, 0.5);
+}
+.service-box:nth-child(1) {
+top: 0;
+left: 25%;
+}
+.service-box:nth-child(2) {
+top: 0;
+right: 25%;
+}
+.service-box:nth-child(3) {
+bottom: 0;
+left: 25%;
+}
+.service-box:nth-child(4) {
+bottom: 0;
+right: 25%;
+}
+.baseline {
+position: absolute;
+width: 100%;
+height: 2px;
+background: #003C43;
+}
+.baseline-top {
+top: 0;
+}
+.baseline-bottom {
+bottom: 0;
+}
+.sideline {
+position: absolute;
+width: 2px;
+height: 100%;
+background: #003C43;
+}
+.sideline-left {
+left: 0;
+}
+.sideline-right {
+right: 0;
+}
+@keyframes ball-animation {
+0% {
+transform: translate(20px, 20px) scale(1);
+}
+25% {
+transform: translate(160px, 20px) scale(0.9);
+}
+50% {
+transform: translate(160px, 80px) scale(1);
+}
+75% {
+transform: translate(20px, 80px) scale(0.9);
+}
+100% {
+transform: translate(20px, 20px) scale(1);
+}
+}
+.tennis-ball {
+animation: ball-animation 3s infinite ease-in-out;
+}
+.loading-text {
+position: absolute;
+bottom: -40px;
+left: 50%;
+transform: translateX(-50%);
+font-size: 16px;
+color: #003C43;
+font-weight: 500;
+letter-spacing: 2px;
+}
+.loading-text::after {
+content: "...";
+animation: dots 1.5s infinite;
+}
+@keyframes dots {
+0%, 20% {
+content: ".";
+}
+40% {
+content: "..";
+}
+60%, 100% {
+content: "...";
+}
+}
+</style>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#003C43',secondary:'#00A0B0'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:root {
+--accent-color: #f8fafc;
+}
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Noto Sans JP', sans-serif;
+scroll-behavior: smooth;
+background-color: #ffffff;
+color: #1a1a1a;
+}
+.hero-section {
+position: relative;
+overflow: hidden;
+}
+.hero-section::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 60, 67, 0.8);
+z-index: 1;
+}
+.hero-content {
+position: relative;
+z-index: 2;
+}
+.timeline-item {
+position: relative;
+padding-left: 30px;
+}
+.timeline-item::before {
+content: "";
+position: absolute;
+left: 0;
+top: 6px;
+width: 12px;
+height: 12px;
+border-radius: 50%;
+background-color: #00A0B0;
+}
+.timeline-item::after {
+content: "";
+position: absolute;
+left: 5px;
+top: 18px;
+width: 2px;
+height: calc(100% - 12px);
+background-color: #00A0B0;
+}
+.timeline-item:last-child::after {
+display: none;
+}
+.skill-bar {
+height: 8px;
+border-radius: 4px;
+background-color: #e5e7eb;
+overflow: hidden;
+}
+.skill-progress {
+height: 100%;
+border-radius: 4px;
+background-color: #00A0B0;
+width: 0;
+transition: width 1.5s ease-out;
+}
+.service-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px rgba(0, 60, 67, 0.1);
+}
+.testimonial-card {
+transition: transform 0.3s ease;
+}
+.testimonial-card:hover {
+transform: translateY(-5px);
+}
+.faq-item {
+border-bottom: 1px solid #e5e7eb;
+}
+.faq-question {
+cursor: pointer;
+}
+.faq-answer {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease;
+}
+.faq-item.active .faq-answer {
+max-height: 500px;
+}
+.process-step {
+position: relative;
+}
+.process-step::after {
+content: "";
+position: absolute;
+top: 50%;
+right: -15px;
+width: 30px;
+height: 2px;
+background-color: #00A0B0;
+}
+.process-step:last-child::after {
+display: none;
+}
+.custom-checkbox {
+appearance: none;
+-webkit-appearance: none;
+width: 20px;
+height: 20px;
+border: 2px solid #003C43;
+border-radius: 4px;
+outline: none;
+cursor: pointer;
+position: relative;
+}
+.custom-checkbox:checked {
+background-color: #003C43;
+}
+.custom-checkbox:checked::after {
+content: "✓";
+position: absolute;
+color: white;
+font-size: 14px;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+.toggle-switch {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 30px;
+}
+.toggle-switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.toggle-slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+transition: .4s;
+border-radius: 34px;
+}
+.toggle-slider:before {
+position: absolute;
+content: "";
+height: 22px;
+width: 22px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
+input:checked + .toggle-slider {
+background-color: #003C43;
+}
+input:checked + .toggle-slider:before {
+transform: translateX(30px);
+}
+</style>
+</head>
+<body class="light-mode">
+<div class="loader">
+<div class="tennis-court-loader">
+<div class="tennis-court">
+<div class="service-box"></div>
+<div class="service-box"></div>
+<div class="service-box"></div>
+<div class="service-box"></div>
+<div class="baseline baseline-top"></div>
+<div class="baseline baseline-bottom"></div>
+<div class="sideline sideline-left"></div>
+<div class="sideline sideline-right"></div>
+</div>
+<div class="net"></div>
+<div class="tennis-ball"></div>
+<div class="loading-text">LOADING</div>
+</div>
+</div>
+<!-- ヘッダー -->
+<header class="fixed w-full bg-white bg-opacity-95 shadow-md z-50 transition-all duration-300">
+<div class="container mx-auto px-4 py-3 flex justify-between items-center">
+<a href="#" class="text-3xl font-['Pacifico'] text-primary">logo</a>
+<nav class="hidden md:flex space-x-8">
+<a href="#about" class="text-gray-700 hover:text-primary transition-colors">About</a>
+<a href="#credentials" class="text-gray-700 hover:text-primary transition-colors">実績</a>
+<a href="#services" class="text-gray-700 hover:text-primary transition-colors">サービス</a>
+<a href="#pricing" class="text-gray-700 hover:text-primary transition-colors">料金</a>
+<a href="#works" class="text-gray-700 hover:text-primary transition-colors">制作事例</a>
+<a href="#process" class="text-gray-700 hover:text-primary transition-colors">制作フロー</a>
+<a href="#contact" class="text-gray-700 hover:text-primary transition-colors">お問い合わせ</a>
+</nav>
+<div class="flex items-center space-x-4">
+<a href="#contact" class="hidden md:block bg-primary text-white px-6 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-all">無料相談</a>
+<button class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700" id="mobileMenuButton">
+<i class="ri-menu-line ri-lg"></i>
+</button>
+</div>
+</div>
+<div id="mobileMenu" class="hidden md:hidden bg-white w-full absolute top-full left-0 shadow-md">
+<div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+<a href="#about" class="text-gray-700 hover:text-primary transition-colors py-2">About</a>
+<a href="#credentials" class="text-gray-700 hover:text-primary transition-colors py-2">実績</a>
+<a href="#services" class="text-gray-700 hover:text-primary transition-colors py-2">サービス</a>
+<a href="#pricing" class="text-gray-700 hover:text-primary transition-colors py-2">料金</a>
+<a href="#works" class="text-gray-700 hover:text-primary transition-colors py-2">制作事例</a>
+<a href="#process" class="text-gray-700 hover:text-primary transition-colors py-2">制作フロー</a>
+<a href="#contact" class="text-gray-700 hover:text-primary transition-colors py-2">お問い合わせ</a>
+<a href="#contact" class="bg-primary text-white px-6 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-all text-center">無料相談</a>
+</div>
+</div>
+</header>
+<!-- ヒーローセクション -->
+<section class="hero-section min-h-screen relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-90"></div>
+<div class="absolute inset-0" style="background-image: url('https://readdy.ai/api/search-image?query=Professional%20tennis%20court%20at%20sunset%2C%20pristine%20condition%20with%20perfect%20lines%20and%20net%2C%20dramatic%20lighting%20with%20warm%20golden%20hour%20glow%2C%20high-end%20facility%20with%20modern%20architecture%20visible%20in%20background%2C%20cinematic%20wide%20shot%2C%20professional%20sports%20photography&width=1920&height=1080&seq=1&orientation=landscape'); background-size: cover; background-position: center;"></div>
+<div class="relative z-10 container mx-auto px-4 h-screen flex items-center">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="text-white">
+<div class="inline-flex items-center bg-white bg-opacity-10 rounded-full px-4 py-2 mb-8">
+<span class="w-2 h-2 bg-white rounded-full mr-2"></span>
+<span class="text-sm font-medium">スポーツ × Web デザイン</span>
+</div>
+<h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8">
+スポーツ業界に<br>特化した<br>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">Web制作</span>
+</h1>
+<p class="text-xl md:text-2xl mb-12 text-gray-200">松戸市を拠点に活動する<br>テニスコーチ × Webデザイナー</p>
+<div class="flex flex-wrap gap-6">
+<a href="#contact" class="group relative overflow-hidden bg-white text-primary px-8 py-4 !rounded-button font-medium whitespace-nowrap">
+<span class="relative z-10">無料相談する</span>
+<div class="absolute inset-0 bg-gradient-to-r from-white to-gray-100 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+</a>
+<a href="#" class="group relative overflow-hidden border-2 border-white text-white px-8 py-4 !rounded-button font-medium whitespace-nowrap">
+<span class="relative z-10">資料をダウンロード</span>
+<div class="absolute inset-0 bg-white bg-opacity-10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+</a>
+</div>
+</div>
+<div class="hidden lg:block relative">
+<div class="absolute -top-20 -right-20 w-96 h-96 bg-white bg-opacity-10 rounded-full filter blur-3xl"></div>
+<div class="absolute -bottom-20 -left-20 w-96 h-96 bg-secondary bg-opacity-10 rounded-full filter blur-3xl"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Aboutセクション -->
+<section id="about" class="py-20" style="background-color: var(--accent-color);">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-16">二刀流で活躍する<span class="text-primary">プロフェッショナル</span></h2>
+<div class="flex flex-col md:flex-row items-center gap-12">
+<div class="md:w-2/5">
+<img src="https://readdy.ai/api/search-image?query=Professional%20Asian%20male%20tennis%20coach%20in%20his%2030s%20with%20a%20modern%20look%2C%20holding%20both%20a%20tennis%20racket%20and%20a%20laptop%2C%20standing%20confidently%20on%20a%20tennis%20court%2C%20wearing%20smart%20casual%20attire%2C%20high%20quality%20portrait%2C%20professional%20photography&width=600&height=800&seq=2&orientation=portrait" alt="本間コーチのプロフィール写真" class="w-full h-auto rounded-lg shadow-xl">
+</div>
+<div class="md:w-3/5">
+<h3 class="text-2xl font-bold mb-4">本間 誠一</h3>
+<p class="text-gray-700 mb-6">千葉県松戸市を拠点に、テニスコーチとWebデザイナーの二つの顔を持つプロフェッショナルとして活動しています。10年以上のテニス指導経験と、5年以上のWeb制作経験を活かし、スポーツ業界に特化したWebサービスを提供。スポーツビジネスの現場を知るからこそ実現できる、実用的で効果的なWebサイト制作が強みです。</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<div>
+<h4 class="text-lg font-semibold mb-3 flex items-center">
+<span class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full mr-2">
+<i class="ri-tennis-line"></i>
+</span>
+テニスコーチとして
+</h4>
+<ul class="space-y-2 text-gray-700">
+<li>・日本テニス協会公認コーチ</li>
+<li>・国際テニス連盟レベル2コーチ</li>
+<li>・松戸市テニス協会理事</li>
+<li>・ジュニア選手育成実績多数</li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-3 flex items-center">
+<span class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full mr-2">
+<i class="ri-code-s-slash-line"></i>
+</span>
+Webデザイナーとして
+</h4>
+<ul class="space-y-2 text-gray-700">
+<li>・Web制作実績50件以上</li>
+<li>・スポーツ関連サイト専門</li>
+<li>・UI/UXデザイン資格保有</li>
+<li>・Webアクセシビリティ検定A級</li>
+</ul>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1">
+<span class="font-medium">HTML/CSS</span>
+<span>95%</span>
+</div>
+<div class="skill-bar">
+<div class="skill-progress" data-width="95%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="font-medium">JavaScript</span>
+<span>85%</span>
+</div>
+<div class="skill-bar">
+<div class="skill-progress" data-width="85%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="font-medium">UI/UXデザイン</span>
+<span>90%</span>
+</div>
+<div class="skill-bar">
+<div class="skill-progress" data-width="90%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="font-medium">テニス指導</span>
+<span>98%</span>
+</div>
+<div class="skill-bar">
+<div class="skill-progress" data-width="98%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Credentialsセクション -->
+<section id="credentials" class="py-20 bg-white">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-16">資格・実績</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16">
+<div>
+<h3 class="text-2xl font-bold mb-6 flex items-center">
+<span class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full mr-3">
+<i class="ri-award-line"></i>
+</span>
+資格・学習歴
+</h3>
+<div class="space-y-8">
+<div class="flex items-start">
+<span class="w-12 h-12 flex items-center justify-center bg-secondary bg-opacity-10 text-secondary rounded-full mr-4 flex-shrink-0">
+<i class="ri-graduation-cap-line ri-lg"></i>
+</span>
+<div>
+<h4 class="font-semibold">SAMURAIエンジニア受講修了</h4>
+<p class="text-gray-600 text-sm mb-2">Webデザイン・制作コース</p>
+<p class="text-gray-700 text-sm">実践的なカリキュラムを通じて、HTML/CSS、WordPress、デザインツール（Figma, Photoshop）などのスキルを習得。クライアントワークを想定したヒアリング・提案・納品までを一貫して学習。</p>
+</div>
+</div>
+<div class="flex items-start">
+<span class="w-12 h-12 flex items-center justify-center bg-secondary bg-opacity-10 text-secondary rounded-full mr-4 flex-shrink-0">
+<i class="ri-user-star-line ri-lg"></i>
+</span>
+<div>
+<h4 class="font-semibold">フリーランスとして活動開始</h4>
+<p class="text-gray-700 text-sm">受講後すぐに独立し、実案件・自主制作を通して実務経験を積みながらスキルを継続して磨いています。テニスコーチとしての人との関わり・伝える力を、Web制作においても活かしています。</p>
+</div>
+</div>
+<div class="flex items-start">
+<span class="w-12 h-12 flex items-center justify-center bg-secondary bg-opacity-10 text-secondary rounded-full mr-4 flex-shrink-0">
+<i class="ri-community-line ri-lg"></i>
+</span>
+<div>
+<h4 class="font-semibold">地域密着型のサポート活動</h4>
+<p class="text-gray-700 text-sm">松戸市を拠点に、地元で活動する小規模事業者や、初めてWebを導入する方々の相談相手として、実用的かつ丁寧な対応を心がけています。</p>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-6 flex items-center">
+<span class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full mr-3">
+<i class="ri-history-line"></i>
+</span>
+経歴
+</h3>
+<div class="space-y-8">
+<div class="timeline-item pb-8">
+<h4 class="font-semibold">テニスとの出会い</h4>
+<p class="text-gray-600 text-sm mb-2">7歳〜</p>
+<p class="text-gray-700">テニスを開始。高校時代には関東大会に出場し、大学ではテニススクールでコーチ業務を経験。</p>
+</div>
+<div class="timeline-item pb-8">
+<h4 class="font-semibold">社会人としての経験</h4>
+<p class="text-gray-600 text-sm mb-2">2015年〜</p>
+<p class="text-gray-700">新卒で営業職として就職。ルート営業やオンライン営業、商談に従事し、コミュニケーションスキルを磨く。</p>
+</div>
+<div class="timeline-item pb-8">
+<h4 class="font-semibold">フリーランス転向とスキル習得</h4>
+<p class="text-gray-600 text-sm mb-2">2020年〜</p>
+<p class="text-gray-700">独立後、テニスコーチとして活動開始。スポーツ関係者の支援を目指しSAMURAIエンジニアでWeb制作を学ぶ。</p>
+</div>
+<div class="timeline-item">
+<h4 class="font-semibold">現在の活動</h4>
+<p class="text-gray-600 text-sm mb-2">2022年〜</p>
+<p class="text-gray-700">松戸市を拠点に、テニス指導とWeb制作の両軸で活動。「人と人をつなぐ」を理念に地域密着型のサポートを展開中。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 rounded-xl p-8 md:p-12">
+<h3 class="text-2xl font-bold mb-8 text-center">数字で見る実績</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+<div class="p-6 bg-white rounded-lg shadow-sm">
+<div class="text-4xl font-bold text-primary mb-2">50+</div>
+<p class="text-gray-700">Web制作実績</p>
+</div>
+<div class="p-6 bg-white rounded-lg shadow-sm">
+<div class="text-4xl font-bold text-primary mb-2">300+</div>
+<p class="text-gray-700">指導生徒数</p>
+</div>
+<div class="p-6 bg-white rounded-lg shadow-sm">
+<div class="text-4xl font-bold text-primary mb-2">15+</div>
+<p class="text-gray-700">大会入賞者輩出</p>
+</div>
+<div class="p-6 bg-white rounded-lg shadow-sm">
+<div class="text-4xl font-bold text-primary mb-2">10年</div>
+<p class="text-gray-700">テニス指導歴</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Serviceセクション -->
+<section id="services" class="py-20" style="background-color: var(--accent-color);">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-6">提供サービス</h2>
+<p class="text-center text-gray-700 max-w-3xl mx-auto mb-16">スポーツ業界を得意としながらも、あらゆる業種のWeb制作に対応可能です。<br>豊富な経験を活かした質の高いサービスをご提供します。</p>
+<div class="bg-white rounded-xl p-8 md:p-12 mb-16">
+<h3 class="text-2xl md:text-3xl font-bold text-center mb-8">こんなお悩みありませんか？</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="flex items-start p-6 bg-gray-50 rounded-lg">
+<span class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mr-4 flex-shrink-0">
+<i class="ri-question-line"></i>
+</span>
+<div>
+<h3 class="font-bold mb-2">予約が増えない...</h3>
+<p class="text-gray-600 text-sm">「ホームページはあるけど、なかなか新規の予約や問い合わせにつながらない」</p>
+</div>
+</div>
+<div class="flex items-start p-6 bg-gray-50 rounded-lg">
+<span class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mr-4 flex-shrink-0">
+<i class="ri-smartphone-line"></i>
+</span>
+<div>
+<h3 class="font-bold mb-2">サイトが見づらい...</h3>
+<p class="text-gray-600 text-sm">「スマートフォンで見ると表示が崩れる。更新も難しくて困っている」</p>
+</div>
+</div>
+<div class="flex items-start p-6 bg-gray-50 rounded-lg">
+<span class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mr-4 flex-shrink-0">
+<i class="ri-customer-service-line"></i>
+</span>
+<div>
+<h3 class="font-bold mb-2">相談しづらい...</h3>
+<p class="text-gray-600 text-sm">「Web制作会社に相談したいけど、スポーツ業界のことを理解してもらえるか不安」</p>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold mb-6">解決のお手伝いをさせてください</h2>
+<p class="text-gray-700 max-w-3xl mx-auto">
+私自身、テニスコーチとして活動する中で同じような悩みを抱えていました。<br>
+だからこそ、スポーツ業界の特性を理解した上で、効果的なWebサイトをご提案できます。
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white p-8 rounded-lg shadow-sm service-card transition-all duration-300">
+<div class="w-16 h-16 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mb-6">
+<i class="ri-layout-4-line ri-2x"></i>
+</div>
+<h3 class="text-xl font-bold mb-4">スポーツ施設向けサイト</h3>
+<p class="text-gray-700 mb-6">予約システムとの連携や、分かりやすい施設案内など、スポーツ施設に必要な機能を備えたWebサイトを制作。更新のしやすさにもこだわります。</p>
+<ul class="space-y-3 mb-6">
+<li class="flex items-center text-gray-600 text-sm">
+<i class="ri-check-line text-primary mr-2"></i>
+スマートフォン対応
+</li>
+<li class="flex items-center text-gray-600 text-sm">
+<i class="ri-check-line text-primary mr-2"></i>
+予約システム連携
+</li>
+<li class="flex items-center text-gray-600 text-sm">
+<i class="ri-check-line text-primary mr-2"></i>
+簡単更新機能
+</li>
+</ul>
+<a href="#contact" class="inline-block text-primary font-medium hover:underline">相談してみる →</a>
+</div>
+<div class="bg-white p-8 rounded-lg shadow-sm service-card transition-all duration-300">
+<div class="w-16 h-16 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mb-6">
+<i class="ri-user-line ri-2x"></i>
+</div>
+<h3 class="text-xl font-bold mb-4">パーソナル向けサイト</h3>
+<p class="text-gray-700 mb-6">トレーナー・コーチ・インストラクターの方向けに、あなたの魅力や指導方針が伝わるサイトを制作。SNSとの連携で情報発信もスムーズに。</p>
+<ul class="space-y-3 mb-6">
+<li class="flex items-center text-gray-600 text-sm">
+<i class="ri-check-line text-primary mr-2"></i>
+実績・経歴紹介
+</li>
+<li class="flex items-center text-gray-600 text-sm">
+<i class="ri-check-line text-primary mr-2"></i>
+SNS連携機能
+</li>
+<li class="flex items-center text-gray-600 text-sm">
+<i class="ri-check-line text-primary mr-2"></i>
+お問い合わせフォーム
+</li>
+</ul>
+<a href="#contact" class="inline-block text-primary font-medium hover:underline">相談してみる →</a>
+</div>
+<div class="bg-white p-8 rounded-lg shadow-sm service-card transition-all duration-300">
+<div class="w-16 h-16 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mb-6">
+<i class="ri-shopping-cart-line ri-2x"></i>
+</div>
+<h3 class="text-xl font-bold mb-4">オンラインショップ</h3>
+<p class="text-gray-700 mb-6">スポーツ用品やオリジナルグッズの販売に。初めてのネットショップでも安心して始められる、シンプルで使いやすいECサイトを制作します。</p>
+<ul class="space-y-3 mb-6">
+<li class="flex items-center text-gray-600 text-sm">
+<i class="ri-check-line text-primary mr-2"></i>
+かんたん商品管理
+</li>
+<li class="flex items-center text-gray-600 text-sm">
+<i class="ri-check-line text-primary mr-2"></i>
+安全な決済システム
+</li>
+<li class="flex items-center text-gray-600 text-sm">
+<i class="ri-check-line text-primary mr-2"></i>
+在庫管理機能
+</li>
+</ul>
+<a href="#contact" class="inline-block text-primary font-medium hover:underline">相談してみる →</a>
+</div>
+</div>
+<div class="mt-16 text-center">
+<div class="bg-white p-8 rounded-lg shadow-sm inline-block max-w-2xl">
+<h3 class="text-xl font-bold mb-4 flex items-center justify-center">
+<span class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full mr-3">
+<i class="ri-heart-line"></i>
+</span>
+初めての方も安心してご相談ください
+</h3>
+<p class="text-gray-700 mb-6">
+Web制作の経験がなくても大丈夫。スポーツの現場で培った「分かりやすく伝える力」を活かして、お客様の想いに寄り添ったサイト制作をお手伝いします。まずはお気軽にご相談ください。
+</p>
+<a href="#contact" class="inline-block bg-primary text-white px-8 py-3 !rounded-button font-medium hover:bg-opacity-90 transition-all">
+無料相談をする
+</a>
+</div>
+</div>
+</div>
+</section>
+<section id="pricing" class="py-20 bg-white">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-5xl font-bold text-center mb-16">料金</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+<div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-lg transition-all">
+<div class="text-center mb-6">
+<h4 class="text-xl font-bold mb-2">ライトプラン</h4>
+<p class="text-gray-600 mb-4">5ページまで</p>
+<div class="text-3xl font-bold text-primary">15万円〜</div>
+</div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>Webサイト制作</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>レスポンシブ対応</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>基本的なSEO対策</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>お問い合わせフォーム</span>
+</li>
+<li class="flex items-center text-gray-400">
+<i class="ri-close-line text-red-500 mr-2"></i>
+<span>予約システム連携</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>アクセス解析設定</span>
+</li>
+</ul>
+<a href="#contact" class="block text-center bg-white border-2 border-primary text-primary px-6 py-3 !rounded-button font-medium hover:bg-primary hover:text-white transition-all">お問い合わせ</a>
+</div>
+<div class="bg-white p-8 rounded-lg shadow-lg transform md:-translate-y-4 relative border-2 border-primary hover:shadow-xl transition-all">
+<div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-white px-4 py-1 !rounded-button text-sm font-medium">おすすめ</div>
+<div class="text-center mb-6">
+<h4 class="text-xl font-bold mb-2">スタンダードプラン</h4>
+<p class="text-gray-600 mb-4">10ページまで</p>
+<div class="text-3xl font-bold text-primary">25万円〜</div>
+</div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span class="font-medium">Webサイト制作</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span class="font-medium">レスポンシブ対応</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span class="font-medium">標準的なSEO対策</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span class="font-medium">お問い合わせフォーム</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span class="font-medium">予約システム連携</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span class="font-medium">アクセス解析設定</span>
+</li>
+</ul>
+<a href="#contact" class="block text-center bg-primary text-white px-6 py-3 !rounded-button font-medium hover:bg-opacity-90 transition-all">お問い合わせ</a>
+</div>
+<div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-lg transition-all">
+<div class="text-center mb-6">
+<h4 class="text-xl font-bold mb-2">プレミアムプラン</h4>
+<p class="text-gray-600 mb-4">20ページまで</p>
+<div class="text-3xl font-bold text-primary">40万円〜</div>
+</div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>Webサイト制作</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>レスポンシブ対応</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>高度なSEO対策</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>お問い合わせフォーム</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>予約システム連携</span>
+</li>
+<li class="flex items-center">
+<i class="ri-check-line text-green-500 mr-2"></i>
+<span>アクセス解析設定</span>
+</li>
+</ul>
+<a href="#contact" class="block text-center bg-white border-2 border-primary text-primary px-6 py-3 !rounded-button font-medium hover:bg-primary hover:text-white transition-all">お問い合わせ</a>
+</div>
+</div>
+<div class="text-center text-gray-600">
+<p class="mb-6">※ 料金は目安です。具体的な金額は案件の内容によって変動します。</p>
+<a href="#contact" class="inline-block bg-primary text-white px-8 py-3 !rounded-button font-medium whitespace-nowrap hover:bg-opacity-90 transition-all">料金の詳細を問い合わせる</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Local Focusセクション -->
+<section id="local-focus" class="py-20 bg-white">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-6">地域密着サービス</h2>
+<p class="text-center text-gray-700 max-w-3xl mx-auto mb-16">松戸市を中心に、千葉県・東京都・埼玉県南部のスポーツ施設に特化したWeb制作サービスを提供しています。</p>
+<div class="flex flex-col md:flex-row gap-12 items-center">
+<div class="md:w-1/2 relative h-[400px] rounded-lg overflow-hidden shadow-lg">
+<div style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png'); background-size: cover; background-position: center;" class="absolute inset-0"></div>
+<div class="absolute inset-0 bg-primary bg-opacity-20"></div>
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-primary rounded-full flex items-center justify-center text-white">
+<div class="text-center">
+<div class="font-bold text-xl">松戸市</div>
+<div class="text-sm">拠点</div>
+</div>
+</div>
+</div>
+<div class="md:w-1/2">
+<h3 class="text-2xl font-bold mb-6">地域のスポーツ施設をサポート</h3>
+<p class="text-gray-700 mb-6">松戸市を拠点に活動しているからこそ、地域のスポーツ施設の課題や特性を深く理解しています。地域密着型のサービスで、お客様のビジネスを全力でサポートします。</p>
+<div class="space-y-4 mb-8">
+<div class="flex items-start">
+<span class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full mr-4 flex-shrink-0">
+<i class="ri-map-pin-line"></i>
+</span>
+<div>
+<h4 class="font-semibold">対応エリア</h4>
+<p class="text-gray-700">松戸市、柏市、流山市、野田市、船橋市、市川市、浦安市、東京都23区東部、埼玉県南部</p>
+</div>
+</div>
+<div class="flex items-start">
+<span class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full mr-4 flex-shrink-0">
+<i class="ri-building-line"></i>
+</span>
+<div>
+<h4 class="font-semibold">主な取引先</h4>
+<p class="text-gray-700">松戸市テニス協会、松戸スポーツセンター、柏フィットネスクラブ、流山スポーツジム、他多数</p>
+</div>
+</div>
+<div class="flex items-start">
+<span class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full mr-4 flex-shrink-0">
+<i class="ri-team-line"></i>
+</span>
+<div>
+<h4 class="font-semibold">地域活動</h4>
+<p class="text-gray-700">松戸市スポーツフェスティバル参加、地域テニス教室開催、スポーツ施設のデジタル化支援</p>
+</div>
+</div>
+</div>
+<a href="#contact" class="inline-block bg-primary text-white px-6 py-3 !rounded-button font-medium whitespace-nowrap hover:bg-opacity-90 transition-all">地域密着サービスについて相談する</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Worksセクション -->
+<section id="works" class="py-20" style="background-color: var(--accent-color);">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-6">制作実績</h2>
+<p class="text-center text-gray-700 max-w-3xl mx-auto mb-12">スポーツ業界に特化したWeb制作の実績をご紹介します。</p>
+<div class="flex justify-center mb-8">
+<div class="inline-flex bg-gray-200 p-1 rounded-full">
+<button class="portfolio-filter active px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium" data-filter="all">すべて</button>
+<button class="portfolio-filter px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium" data-filter="tennis">テニス</button>
+<button class="portfolio-filter px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium" data-filter="fitness">フィットネス</button>
+<button class="portfolio-filter px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium" data-filter="yoga">ヨガ</button>
+<button class="portfolio-filter px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium" data-filter="other">その他</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 portfolio-items">
+<div class="portfolio-item tennis" data-category="tennis">
+<div class="bg-white rounded-lg overflow-hidden shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=Modern%20tennis%20club%20website%20displayed%20on%20a%20laptop%2C%20professional%20web%20design%20for%20sports%20facility%2C%20clean%20layout%20with%20tennis%20court%20imagery%2C%20high%20quality%20mockup&width=600&height=400&seq=3&orientation=landscape" alt="松戸テニスクラブ Webサイト" class="w-full h-64 object-cover object-top">
+<div class="p-6">
+<h3 class="text-xl font-bold mb-2">松戸テニスクラブ</h3>
+<p class="text-gray-700 mb-4">会員募集と施設案内に特化したWebサイト制作。予約システムの導入により、オンライン予約率が60%向上。</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">テニス</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">レスポンシブ</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">予約システム</span>
+</div>
+<a href="#" class="inline-block text-primary font-medium hover:underline">詳細を見る →</a>
+</div>
+</div>
+</div>
+<div class="portfolio-item fitness" data-category="fitness">
+<div class="bg-white rounded-lg overflow-hidden shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=Modern%20fitness%20gym%20website%20displayed%20on%20a%20laptop%2C%20professional%20web%20design%20for%20sports%20facility%2C%20clean%20layout%20with%20gym%20equipment%20imagery%2C%20high%20quality%20mockup&width=600&height=400&seq=4&orientation=landscape" alt="柏フィットネスクラブ Webサイト" class="w-full h-64 object-cover object-top">
+<div class="p-6">
+<h3 class="text-xl font-bold mb-2">柏フィットネスクラブ</h3>
+<p class="text-gray-700 mb-4">会員募集に特化したランディングページ制作。リニューアル後、問い合わせ数が月間40件増加。</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">フィットネス</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">ランディングページ</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">SEO対策</span>
+</div>
+<a href="#" class="inline-block text-primary font-medium hover:underline">詳細を見る →</a>
+</div>
+</div>
+</div>
+<div class="portfolio-item yoga" data-category="yoga">
+<div class="bg-white rounded-lg overflow-hidden shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=Modern%20yoga%20studio%20website%20displayed%20on%20a%20laptop%2C%20professional%20web%20design%20for%20wellness%20facility%2C%20clean%20layout%20with%20yoga%20practice%20imagery%2C%20high%20quality%20mockup&width=600&height=400&seq=5&orientation=landscape" alt="流山ヨガスタジオ Webサイト" class="w-full h-64 object-cover object-top">
+<div class="p-6">
+<h3 class="text-xl font-bold mb-2">流山ヨガスタジオ</h3>
+<p class="text-gray-700 mb-4">ヨガインストラクターのポートフォリオサイト。Instagram連携機能で集客力アップを実現。</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full">ヨガ</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">ポートフォリオ</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">SNS連携</span>
+</div>
+<a href="#" class="inline-block text-primary font-medium hover:underline">詳細を見る →</a>
+</div>
+</div>
+</div>
+<div class="portfolio-item tennis" data-category="tennis">
+<div class="bg-white rounded-lg overflow-hidden shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=Modern%20tennis%20academy%20website%20displayed%20on%20a%20laptop%2C%20professional%20web%20design%20for%20sports%20coaching%2C%20clean%20layout%20with%20tennis%20training%20imagery%2C%20high%20quality%20mockup&width=600&height=400&seq=6&orientation=landscape" alt="市川テニスアカデミー Webサイト" class="w-full h-64 object-cover object-top">
+<div class="p-6">
+<h3 class="text-xl font-bold mb-2">市川テニスアカデミー</h3>
+<p class="text-gray-700 mb-4">ジュニア選手育成に特化したテニススクールのWebサイト。コース案内と実績紹介で入会率向上。</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">テニス</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">スクール</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">実績紹介</span>
+</div>
+<a href="#" class="inline-block text-primary font-medium hover:underline">詳細を見る →</a>
+</div>
+</div>
+</div>
+<div class="portfolio-item fitness" data-category="fitness">
+<div class="bg-white rounded-lg overflow-hidden shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=Modern%20personal%20trainer%20website%20displayed%20on%20a%20laptop%2C%20professional%20web%20design%20for%20fitness%20coaching%2C%20clean%20layout%20with%20training%20session%20imagery%2C%20high%20quality%20mockup&width=600&height=400&seq=7&orientation=landscape" alt="船橋パーソナルジム Webサイト" class="w-full h-64 object-cover object-top">
+<div class="p-6">
+<h3 class="text-xl font-bold mb-2">船橋パーソナルジム</h3>
+<p class="text-gray-700 mb-4">パーソナルトレーナー向けポートフォリオサイト。ビフォーアフター事例の掲載で成約率アップ。</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">フィットネス</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">パーソナル</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">事例紹介</span>
+</div>
+<a href="#" class="inline-block text-primary font-medium hover:underline">詳細を見る →</a>
+</div>
+</div>
+</div>
+<div class="portfolio-item other" data-category="other">
+<div class="bg-white rounded-lg overflow-hidden shadow-sm">
+<img src="https://readdy.ai/api/search-image?query=Modern%20sports%20equipment%20online%20store%20website%20displayed%20on%20a%20laptop%2C%20professional%20e-commerce%20web%20design%2C%20clean%20layout%20with%20sports%20products%20imagery%2C%20high%20quality%20mockup&width=600&height=400&seq=8&orientation=landscape" alt="松戸スポーツ用品店 ECサイト" class="w-full h-64 object-cover object-top">
+<div class="p-6">
+<h3 class="text-xl font-bold mb-2">松戸スポーツ用品店</h3>
+<p class="text-gray-700 mb-4">地域スポーツ用品店のECサイト構築。オンライン販売導入で売上30%増加を達成。</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">ECサイト</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">スポーツ用品</span>
+<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">決済システム</span>
+</div>
+<a href="#" class="inline-block text-primary font-medium hover:underline">詳細を見る →</a>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center">
+<a href="#" class="inline-block bg-white border border-primary text-primary px-8 py-3 !rounded-button font-medium whitespace-nowrap hover:bg-primary hover:text-white transition-all">すべての実績を見る</a>
+</div>
+</div>
+</section>
+<!-- Testimonialsセクション -->
+<section class="py-20 bg-white">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-6">お客様の声</h2>
+<p class="text-center text-gray-700 max-w-3xl mx-auto mb-16">実際にサービスをご利用いただいたお客様からいただいた声をご紹介します。</p>
+<div class="testimonial-slider relative">
+<div class="testimonial-wrapper flex overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide space-x-6">
+<div class="testimonial-card flex-shrink-0 w-full md:w-1/2 lg:w-1/3 snap-center">
+<div class="bg-white p-8 rounded-lg shadow-sm h-full">
+<div class="flex items-center mb-6">
+<div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+<i class="ri-user-line ri-xl text-gray-500"></i>
+</div>
+<div>
+<h4 class="font-bold">佐藤 健太郎</h4>
+<p class="text-gray-600 text-sm">松戸テニスクラブ 代表</p>
+</div>
+</div>
+<div class="flex mb-4">
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+</div>
+<p class="text-gray-700">「テニスコーチとしての経験を持つ本間さんだからこそ、テニスクラブの課題を的確に理解してくれました。サイトリニューアル後は問い合わせが2倍に増え、予約システムの導入で業務効率も大幅に改善。投資以上の効果を得られています。」</p>
+</div>
+</div>
+<div class="testimonial-card flex-shrink-0 w-full md:w-1/2 lg:w-1/3 snap-center">
+<div class="bg-white p-8 rounded-lg shadow-sm h-full">
+<div class="flex items-center mb-6">
+<div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+<i class="ri-user-line ri-xl text-gray-500"></i>
+</div>
+<div>
+<h4 class="font-bold">鈴木 美咲</h4>
+<p class="text-gray-600 text-sm">流山ヨガスタジオ オーナー</p>
+</div>
+</div>
+<div class="flex mb-4">
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+</div>
+<p class="text-gray-700">「スポーツ業界に精通している本間さんは、私たちヨガスタジオの雰囲気やコンセプトを完璧に理解してくれました。シンプルで美しいデザインと使いやすい予約システムで、新規顧客の獲得に大きく貢献しています。」</p>
+</div>
+</div>
+<div class="testimonial-card flex-shrink-0 w-full md:w-1/2 lg:w-1/3 snap-center">
+<div class="bg-white p-8 rounded-lg shadow-sm h-full">
+<div class="flex items-center mb-6">
+<div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+<i class="ri-user-line ri-xl text-gray-500"></i>
+</div>
+<div>
+<h4 class="font-bold">田中 誠一</h4>
+<p class="text-gray-600 text-sm">柏フィットネスクラブ マネージャー</p>
+</div>
+</div>
+<div class="flex mb-4">
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-half-fill text-yellow-400"></i>
+</div>
+<p class="text-gray-700">「地域密着型のジムとして、地元のお客様にアピールできるサイトを希望していました。本間さんは松戸市周辺の特性を熟知しており、地域に根差したコンテンツ作りで差別化できました。リニューアル後、体験入会が1.5倍に増加しています。」</p>
+</div>
+</div>
+<div class="testimonial-card flex-shrink-0 w-full md:w-1/2 lg:w-1/3 snap-center">
+<div class="bg-white p-8 rounded-lg shadow-sm h-full">
+<div class="flex items-center mb-6">
+<div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+<i class="ri-user-line ri-xl text-gray-500"></i>
+</div>
+<div>
+<h4 class="font-bold">高橋 大輔</h4>
+<p class="text-gray-600 text-sm">パーソナルトレーナー</p>
+</div>
+</div>
+<div class="flex mb-4">
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+<i class="ri-star-fill text-yellow-400"></i>
+</div>
+<p class="text-gray-700">「個人事業主として初めてのWebサイト制作でしたが、本間さんは丁寧にヒアリングしてくれ、私の強みを最大限に活かしたポートフォリオサイトを作成してくれました。サイト公開後は問い合わせが増え、新規顧客獲得につながっています。」</p>
+</div>
+</div>
+</div>
+<div class="testimonial-controls flex justify-center space-x-2 mt-6">
+<button class="testimonial-dot w-3 h-3 rounded-full bg-gray-300 active"></button>
+<button class="testimonial-dot w-3 h-3 rounded-full bg-gray-300"></button>
+<button class="testimonial-dot w-3 h-3 rounded-full bg-gray-300"></button>
+<button class="testimonial-dot w-3 h-3 rounded-full bg-gray-300"></button>
+</div>
+</div>
+</div>
+</section>
+<!-- Processセクション -->
+<section id="process" class="py-20" style="background-color: var(--accent-color);">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-6">制作フロー</h2>
+<p class="text-center text-gray-700 max-w-3xl mx-auto mb-16">Webサイト制作の流れをご紹介します。透明性のある制作プロセスで、安心してお任せいただけます。</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="bg-white p-8 rounded-lg shadow-sm process-step">
+<div class="w-16 h-16 flex items-center justify-center bg-primary text-white rounded-full mb-6 text-2xl font-bold">1</div>
+<h3 class="text-xl font-bold mb-4">ヒアリング・企画</h3>
+<p class="text-gray-700 mb-4">目的や課題、ターゲット、予算などをヒアリングし、最適な提案を行います。スポーツ業界の知識を活かした企画立案が強みです。</p>
+<p class="text-sm text-gray-500">所要期間：約1週間</p>
+</div>
+<div class="bg-white p-8 rounded-lg shadow-sm process-step">
+<div class="w-16 h-16 flex items-center justify-center bg-primary text-white rounded-full mb-6 text-2xl font-bold">2</div>
+<h3 class="text-xl font-bold mb-4">デザイン制作</h3>
+<p class="text-gray-700 mb-4">ヒアリング内容をもとにデザインカンプを作成。修正を重ねながら、理想のデザインに仕上げていきます。</p>
+<p class="text-sm text-gray-500">所要期間：約2週間</p>
+</div>
+<div class="bg-white p-8 rounded-lg shadow-sm process-step">
+<div class="w-16 h-16 flex items-center justify-center bg-primary text-white rounded-full mb-6 text-2xl font-bold">3</div>
+<h3 class="text-xl font-bold mb-4">コーディング・実装</h3>
+<p class="text-gray-700 mb-4">デザインをもとにHTML/CSS/JavaScriptでコーディング。レスポンシブ対応やSEO対策も同時に行います。</p>
+<p class="text-sm text-gray-500">所要期間：約3週間</p>
+</div>
+<div class="bg-white p-8 rounded-lg shadow-sm">
+<div class="w-16 h-16 flex items-center justify-center bg-primary text-white rounded-full mb-6 text-2xl font-bold">4</div>
+<h3 class="text-xl font-bold mb-4">公開・運用サポート</h3>
+<p class="text-gray-700 mb-4">サイト公開後も継続的なサポートを提供。アクセス解析や更新作業のサポート、改善提案を行います。</p>
+<p class="text-sm text-gray-500">所要期間：継続的にサポート</p>
+</div>
+</div>
+<div class="mt-16 bg-white p-8 md:p-12 rounded-lg shadow-sm">
+<h3 class="text-2xl font-bold mb-8 text-center">アフターサポート</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="text-center">
+<div class="w-20 h-20 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mx-auto mb-6">
+<i class="ri-refresh-line ri-2x"></i>
+</div>
+<h4 class="text-lg font-bold mb-3">更新サポート</h4>
+<p class="text-gray-700">定期的な情報更新や画像差し替えなど、サイト運用をサポートします。</p>
+</div>
+<div class="text-center">
+<div class="w-20 h-20 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mx-auto mb-6">
+<i class="ri-line-chart-line ri-2x"></i>
+</div>
+<h4 class="text-lg font-bold mb-3">アクセス解析</h4>
+<p class="text-gray-700">Google Analyticsを活用したアクセス解析と改善提案を行います。</p>
+</div>
+<div class="text-center">
+<div class="w-20 h-20 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mx-auto mb-6">
+<i class="ri-customer-service-2-line ri-2x"></i>
+</div>
+<h4 class="text-lg font-bold mb-3">技術サポート</h4>
+<p class="text-gray-700">サイトの不具合や質問に対応。迅速な技術サポートを提供します。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQセクション -->
+<section id="faq" class="py-20 bg-white">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-6">よくある質問</h2>
+<p class="text-center text-gray-700 max-w-3xl mx-auto mb-16">お客様からよくいただくご質問にお答えします。</p>
+<div class="max-w-3xl mx-auto">
+<div class="faq-item py-4 active">
+<div class="faq-question flex justify-between items-center">
+<h3 class="text-lg font-semibold">制作期間はどのくらいかかりますか？</h3>
+<span class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full">
+<i class="ri-arrow-down-s-line"></i>
+</span>
+</div>
+<div class="faq-answer pt-4">
+<p class="text-gray-700">一般的な5〜10ページ程度のWebサイトであれば、約1〜2ヶ月程度が目安です。ヒアリングから企画、デザイン、コーディング、テスト、公開までの工程を丁寧に進めていきます。急ぎの場合は、ご相談ください。</p>
+</div>
+</div>
+<div class="faq-item py-4">
+<div class="faq-question flex justify-between items-center">
+<h3 class="text-lg font-semibold">料金の支払い方法は？</h3>
+<span class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full">
+<i class="ri-arrow-down-s-line"></i>
+</span>
+</div>
+<div class="faq-answer pt-4">
+<p class="text-gray-700">お支払いは、着手金（30%）、中間金（40%）、完了金（30%）の3回分割が基本となります。銀行振込またはクレジットカード決済に対応しています。分割回数のご相談も承ります。</p>
+</div>
+</div>
+<div class="faq-item py-4">
+<div class="faq-question flex justify-between items-center">
+<h3 class="text-lg font-semibold">サイト公開後のサポートはありますか？</h3>
+<span class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full">
+<i class="ri-arrow-down-s-line"></i>
+</span>
+</div>
+<div class="faq-answer pt-4">
+<p class="text-gray-700">はい、サイト公開後も安心してご利用いただけるよう、各種サポートプランをご用意しています。更新作業代行、セキュリティ対策、アクセス解析など、ニーズに合わせたプランをお選びいただけます。</p>
+</div>
+</div>
+<div class="faq-item py-4">
+<div class="faq-question flex justify-between items-center">
+<h3 class="text-lg font-semibold">松戸市以外でも対応可能ですか？</h3>
+<span class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full">
+<i class="ri-arrow-down-s-line"></i>
+</span>
+</div>
+<div class="faq-answer pt-4">
+<p class="text-gray-700">はい、松戸市を拠点としていますが、千葉県全域、東京都、埼玉県南部のお客様にも対応しています。オンラインでの打ち合わせも可能ですので、お気軽にご相談ください。</p>
+</div>
+</div>
+<div class="faq-item py-4">
+<div class="faq-question flex justify-between items-center">
+<h3 class="text-lg font-semibold">スポーツ業界以外のWeb制作も依頼できますか？</h3>
+<span class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full">
+<i class="ri-arrow-down-s-line"></i>
+</span>
+</div>
+<div class="faq-answer pt-4">
+<p class="text-gray-700">スポーツ業界に特化していますが、他業種のWeb制作も承っております。ただし、スポーツ・健康・フィットネス関連の分野が最も得意としている領域です。まずはお気軽にご相談ください。</p>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center">
+<p class="text-gray-700 mb-6">その他のご質問がございましたら、お気軽にお問い合わせください。</p>
+<a href="#contact" class="inline-block bg-primary text-white px-8 py-3 !rounded-button font-medium whitespace-nowrap hover:bg-opacity-90 transition-all">お問い合わせする</a>
+</div>
+</div>
+</section>
+<!-- Contactセクション -->
+<section id="contact" class="py-20" style="background-color: var(--accent-color);">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-6">お問い合わせ</h2>
+<p class="text-center text-gray-700 max-w-3xl mx-auto mb-16">Web制作のご相談やお見積りのご依頼など、お気軽にお問い合わせください。</p>
+<div class="flex flex-col md:flex-row gap-12">
+<div class="md:w-1/2">
+  <form action="https://formspree.io/f/あなたのフォームID" method="POST" class="bg-white p-8 rounded-lg shadow-sm">
+    <div class="mb-6">
+      <label for="name" class="block text-gray-700 font-medium mb-2">お名前 <span class="text-red-500">*</span></label>
+      <input type="text" name="name" id="name" required class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary">
+    </div>
+    <div class="mb-6">
+      <label for="email" class="block text-gray-700 font-medium mb-2">メールアドレス <span class="text-red-500">*</span></label>
+      <input type="email" name="email" id="email" required class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary">
+    </div>
+    <div class="mb-6">
+      <label for="phone" class="block text-gray-700 font-medium mb-2">電話番号</label>
+      <input type="tel" name="phone" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary">
+    </div>
+    <div class="mb-6">
+      <label for="company" class="block text-gray-700 font-medium mb-2">会社名・施設名</label>
+      <input type="text" name="company" id="company" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary">
+    </div>
+    <div class="mb-6">
+      <label for="inquiry" class="block text-gray-700 font-medium mb-2">お問い合わせ内容 <span class="text-red-500">*</span></label>
+      <select name="inquiry" id="inquiry" required class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary pr-8">
+        <option value="" selected disabled>選択してください</option>
+        <option value="website">Webサイト制作について</option>
+        <option value="portfolio">ポートフォリオサイト制作について</option>
+        <option value="ec">ECサイト構築について</option>
+        <option value="support">サポート・保守について</option>
+        <option value="other">その他</option>
+      </select>
+    </div>
+    <div class="mb-6">
+      <label for="message" class="block text-gray-700 font-medium mb-2">メッセージ <span class="text-red-500">*</span></label>
+      <textarea name="message" id="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary"></textarea>
+    </div>
+    <div class="mb-6 flex items-start">
+      <input type="checkbox" id="privacy" required class="custom-checkbox mr-3 mt-1">
+      <label for="privacy" class="text-gray-700">プライバシーポリシーに同意します <span class="text-red-500">*</span></label>
+    </div>
+    <!-- 送信ボタン（元のデザイン活用） -->
+    <button type="submit" class="w-full bg-primary text-white py-3 !rounded-button font-medium whitespace-nowrap hover:bg-opacity-90 transition-all">
+      送信する
+    </button>
+    <input type="hidden" name="_redirect" value="https://あなたのドメイン/thanks.html">
+  </form>
+</div>
+<div class="md:w-1/2">
+<div class="bg-white p-8 rounded-lg shadow-sm mb-8">
+<h3 class="text-xl font-bold mb-6 flex items-center">
+<span class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full mr-3">
+<i class="ri-customer-service-line"></i>
+</span>
+お気軽にご相談ください
+</h3>
+<p class="text-gray-700 mb-8">Web制作に関するご質問や見積もりのご依頼など、お気軽にお問い合わせください。スポーツ業界に特化したWeb制作のプロフェッショナルとして、最適なご提案をいたします。</p>
+<div class="space-y-6">
+<div class="flex items-start">
+<span class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mr-4 flex-shrink-0">
+<i class="ri-map-pin-line"></i>
+</span>
+<div>
+<h4 class="font-semibold">所在地</h4>
+<p class="text-gray-700">〒271-0092 千葉県松戸市松戸1234-5</p>
+</div>
+</div>
+<div class="flex items-start">
+<span class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mr-4 flex-shrink-0">
+<i class="ri-time-line"></i>
+</span>
+<div>
+<h4 class="font-semibold">営業時間</h4>
+<p class="text-gray-700">平日 9:00〜18:00（土日祝休）</p>
+</div>
+</div>
+<div class="flex items-start">
+<span class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mr-4 flex-shrink-0">
+<i class="ri-phone-line"></i>
+</span>
+<div>
+<h4 class="font-semibold">電話番号</h4>
+<p class="text-gray-700">047-123-4567（平日 9:00〜18:00）</p>
+</div>
+</div>
+<div class="flex items-start">
+<span class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 text-primary rounded-full mr-4 flex-shrink-0">
+<i class="ri-mail-line"></i>
+</span>
+<div>
+<h4 class="font-semibold">メールアドレス</h4>
+<p class="text-gray-700">info@homma-web.com</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary text-white p-8 rounded-lg shadow-sm">
+<h3 class="text-xl font-bold mb-6 flex items-center">
+<span class="w-10 h-10 flex items-center justify-center bg-white text-primary rounded-full mr-3">
+<i class="ri-line-line"></i>
+</span>
+LINEで無料相談
+</h3>
+<p class="mb-6">LINEでも無料相談を受け付けています。Web制作に関する質問や見積もりのご依頼など、お気軽にメッセージをお送りください。</p>
+<a href="#" class="inline-block bg-white text-primary px-6 py-3 !rounded-button font-medium whitespace-nowrap hover:bg-opacity-90 transition-all">友だち追加</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- フッター -->
+<footer class="bg-gray-900 text-white py-16">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+<div>
+<a href="#" class="text-3xl font-['Pacifico'] text-white mb-6 inline-block">logo</a>
+<p class="text-gray-400 mb-6">松戸市を拠点に活動するテニスコーチ兼Webデザイナー。スポーツ業界に特化したWeb制作サービスを提供しています。</p>
+<div class="flex space-x-4">
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-twitter-x-line"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-instagram-line"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-facebook-line"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+<i class="ri-youtube-line"></i>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-6">サービス</h4>
+<ul class="space-y-3">
+<li><a href="#services" class="text-gray-400 hover:text-white transition-colors">Webサイト制作</a></li>
+<li><a href="#services" class="text-gray-400 hover:text-white transition-colors">ポートフォリオサイト制作</a></li>
+<li><a href="#services" class="text-gray-400 hover:text-white transition-colors">ECサイト構築</a></li>
+<li><a href="#services" class="text-gray-400 hover:text-white transition-colors">サポート・保守</a></li>
+<li><a href="#services" class="text-gray-400 hover:text-white transition-colors">SEO対策</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-6">会社情報</h4>
+<ul class="space-y-3">
+<li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+<li><a href="#credentials" class="text-gray-400 hover:text-white transition-colors">実績</a></li>
+<li><a href="#works" class="text-gray-400 hover:text-white transition-colors">制作事例</a></li>
+<li><a href="#process" class="text-gray-400 hover:text-white transition-colors">制作フロー</a></li>
+<li><a href="#faq" class="text-gray-400 hover:text-white transition-colors">よくある質問</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-6">お問い合わせ</h4>
+<ul class="space-y-3">
+<li class="flex items-start">
+<i class="ri-map-pin-line mr-3 mt-1"></i>
+<span class="text-gray-400">〒271-0092 千葉県松戸市松戸1234-5</span>
+</li>
+<li class="flex items-start">
+<i class="ri-phone-line mr-3 mt-1"></i>
+<span class="text-gray-400">047-123-4567</span>
+</li>
+<li class="flex items-start">
+<i class="ri-mail-line mr-3 mt-1"></i>
+<span class="text-gray-400">info@homma-web.com</span>
+</li>
+<li class="flex items-start">
+<i class="ri-time-line mr-3 mt-1"></i>
+<span class="text-gray-400">平日 9:00〜18:00</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-500 mb-4 md:mb-0">© 2025 本間テニスコーチ＆Webデザイン. All rights reserved.</p>
+<div class="flex space-x-6">
+<a href="#" class="text-gray-500 hover:text-white transition-colors">プライバシーポリシー</a>
+<a href="#" class="text-gray-500 hover:text-white transition-colors">特定商取引法に基づく表記</a>
+</div>
+</div>
+</div>
+</footer>
+<script id="mobileMenuScript">
+document.addEventListener('DOMContentLoaded', function() {
+const mobileMenuButton = document.getElementById('mobileMenuButton');
+const mobileMenu = document.getElementById('mobileMenu');
+mobileMenuButton.addEventListener('click', function() {
+mobileMenu.classList.toggle('hidden');
+if (mobileMenu.classList.contains('hidden')) {
+mobileMenuButton.innerHTML = '<i class="ri-menu-line ri-lg"></i>';
+} else {
+mobileMenuButton.innerHTML = '<i class="ri-close-line ri-lg"></i>';
+}
+});
+// Close mobile menu when clicking on a link
+const mobileLinks = mobileMenu.querySelectorAll('a');
+mobileLinks.forEach(link => {
+link.addEventListener('click', function() {
+mobileMenu.classList.add('hidden');
+mobileMenuButton.innerHTML = '<i class="ri-menu-line ri-lg"></i>';
+});
+});
+});
+</script>
+<script id="headerScrollScript">
+document.addEventListener('DOMContentLoaded', function() {
+const header = document.querySelector('header');
+window.addEventListener('scroll', function() {
+if (window.scrollY > 50) {
+header.classList.add('py-2');
+header.classList.add('shadow-lg');
+} else {
+header.classList.remove('py-2');
+header.classList.remove('shadow-lg');
+}
+});
+});
+</script>
+<script id="skillBarScript">
+document.addEventListener('DOMContentLoaded', function() {
+const skillBars = document.querySelectorAll('.skill-progress');
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+const width = entry.target.getAttribute('data-width');
+entry.target.style.width = width;
+observer.unobserve(entry.target);
+}
+});
+}, { threshold: 0.5 });
+skillBars.forEach(bar => {
+observer.observe(bar);
+});
+});
+</script>
+<script id="portfolioFilterScript">
+document.addEventListener('DOMContentLoaded', function() {
+const filterButtons = document.querySelectorAll('.portfolio-filter');
+const portfolioItems = document.querySelectorAll('.portfolio-item');
+filterButtons.forEach(button => {
+button.addEventListener('click', function() {
+const filterValue = this.getAttribute('data-filter');
+// Update active button
+filterButtons.forEach(btn => btn.classList.remove('active', 'bg-primary', 'text-white'));
+this.classList.add('active', 'bg-primary', 'text-white');
+// Filter items
+portfolioItems.forEach(item => {
+if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+item.style.display = 'block';
+} else {
+item.style.display = 'none';
+}
+});
+});
+});
+});
+</script>
+<script id="testimonialSliderScript">
+document.addEventListener('DOMContentLoaded', function() {
+const testimonialWrapper = document.querySelector('.testimonial-wrapper');
+const testimonialCards = document.querySelectorAll('.testimonial-card');
+const dots = document.querySelectorAll('.testimonial-dot');
+dots.forEach((dot, index) => {
+dot.addEventListener('click', function() {
+// Update active dot
+dots.forEach(d => d.classList.remove('active', 'bg-primary'));
+this.classList.add('active', 'bg-primary');
+// Scroll to the corresponding testimonial
+const cardWidth = testimonialCards[0].offsetWidth;
+const gap = 24; // Assuming 6 * 4px = 24px (space-x-6)
+testimonialWrapper.scrollTo({
+left: index * (cardWidth + gap),
+behavior: 'smooth'
+});
+});
+});
+// Update dots on scroll
+testimonialWrapper.addEventListener('scroll', function() {
+const scrollPosition = testimonialWrapper.scrollLeft;
+const cardWidth = testimonialCards[0].offsetWidth;
+const gap = 24;
+const activeIndex = Math.round(scrollPosition / (cardWidth + gap));
+dots.forEach((dot, index) => {
+if (index === activeIndex) {
+dot.classList.add('active', 'bg-primary');
+} else {
+dot.classList.remove('active', 'bg-primary');
+}
+});
+});
+});
+</script>
+<script id="faqScript">
+document.addEventListener('DOMContentLoaded', function() {
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+const question = item.querySelector('.faq-question');
+question.addEventListener('click', function() {
+const isActive = item.classList.contains('active');
+// Close all FAQ items
+faqItems.forEach(faq => {
+faq.classList.remove('active');
+const icon = faq.querySelector('.faq-question i');
+icon.className = 'ri-arrow-down-s-line';
+});
+// Toggle current item
+if (!isActive) {
+item.classList.add('active');
+const icon = item.querySelector('.faq-question i');
+icon.className = 'ri-arrow-up-s-line';
+}
+});
+});
+});
+</script>
+<script id="loaderScript">
+document.addEventListener('DOMContentLoaded', function() {
+const loader = document.querySelector('.loader');
+window.addEventListener('load', function() {
+setTimeout(function() {
+loader.classList.add('fade-out');
+setTimeout(function() {
+loader.style.display = 'none';
+}, 500);
+}, 1000);
+});
+});
+</script>
+<script id="smoothScrollScript">
+document.addEventListener('DOMContentLoaded', function() {
+const links = document.querySelectorAll('a[href^="#"]');
+links.forEach(link => {
+link.addEventListener('click', function(e) {
+e.preventDefault();
+const targetId = this.getAttribute('href');
+if (targetId === '#') return;
+const targetElement = document.querySelector(targetId);
+if (targetElement) {
+const headerHeight = document.querySelector('header').offsetHeight;
+const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+window.scrollTo({
+top: targetPosition,
+behavior: 'smooth'
+});
+}
+});
+});
+});
+</script>
+</body>
+</html>
